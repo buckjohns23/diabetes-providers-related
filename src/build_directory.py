@@ -21,13 +21,14 @@ HOME_LON = -86.1067
 
 NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
 
-USER_AGENT = "DiabetesProvidersRelated/1.0 (contact: c_m_johnson@gmail.com)"
+# ✅ Updated email
+USER_AGENT = "DiabetesProvidersRelated/1.0 (contact: c_m_johnson@yahoo.com)"
 
 CACHE_DIR = "cache"
 GEOCODE_CACHE_PATH = os.path.join(CACHE_DIR, "geocode_cache.json")
 
-MAX_NEW_GEOCODES_PER_RUN = 120
-GEOCODE_SLEEP_SECONDS = 1.0
+MAX_NEW_GEOCODES_PER_RUN = 80
+GEOCODE_SLEEP_SECONDS = 1.1
 
 STATE = "IN"
 CITIES = [
@@ -46,6 +47,11 @@ TAXONOMY_ALLOWLIST = {
     "363A00000X",
 }
 
+
+# =========================
+# HELPERS
+# =========================
+
 def clean_phone(phone: str) -> str:
     if not phone:
         return ""
@@ -53,6 +59,7 @@ def clean_phone(phone: str) -> str:
     if len(digits) == 10:
         return f"({digits[0:3]}) {digits[3:6]}-{digits[6:10]}"
     return phone.strip()
+
 
 def haversine_miles(lat1, lon1, lat2, lon2):
     R = 3958.7613
@@ -63,43 +70,70 @@ def haversine_miles(lat1, lon1, lat2, lon2):
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
     return R * c
 
+
 def load_cache():
     os.makedirs(CACHE_DIR, exist_ok=True)
     if not os.path.exists(GEOCODE_CACHE_PATH):
         return {"items": {}}
-    with open(GEOCODE_CACHE_PATH, "r") as f:
-        return json.load(f)
+    try:
+        with open(GEOCODE_CACHE_PATH, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {"items": {}}
+
 
 def save_cache(cache):
-    with open(GEOCODE_CACHE_PATH, "w") as f:
-        json.dump(cache, f)
+    with open(GEOCODE_CACHE_PATH, "w", encoding="utf-8") as f:
+        json.dump(cache, f, indent=2)
 
+
+# SAFE GEOCODING — WILL NOT CRASH WORKFLOW
 def geocode_address(addr, cache, budget):
-    key = addr.lower()
+    key = addr.lower().strip()
+    if not key:
+        return None
+
     if key in cache["items"]:
         return cache["items"][key]
 
     if budget["remaining"] <= 0:
         return None
 
-    params = {"q": addr, "format": "json", "limit": 1}
-    r = requests.get(
-        NOMINATIM_URL,
-        params=params,
-        headers={"User-Agent": USER_AGENT},
-        timeout=30
-    )
-    results = r.json()
+    params = {
+        "q": addr,
+        "format": "json",
+        "limit": 1
+    }
 
-    if results:
-        lat = float(results[0]["lat"])
-        lon = float(results[0]["lon"])
-        cache["items"][key] = (lat, lon)
-        budget["remaining"] -= 1
-        time.sleep(GEOCODE_SLEEP_SECONDS)
-        return lat, lon
+    try:
+        r = requests.get(
+            NOMINATIM_URL,
+            params=params,
+            headers={"User-Agent": USER_AGENT},
+            timeout=30
+        )
+
+        if r.status_code != 200:
+            return None
+
+        try:
+            results = r.json()
+        except Exception:
+            return None
+
+        if results:
+            lat = float(results[0]["lat"])
+            lon = float(results[0]["lon"])
+            cache["items"][key] = (lat, lon)
+            budget["remaining"] -= 1
+            time.sleep(GEOCODE_SLEEP_SECONDS)
+            return lat, lon
+
+    except Exception:
+        return None
 
     return None
+
 
 def fetch_city(city):
     params = {
@@ -108,14 +142,19 @@ def fetch_city(city):
         "city": city,
         "limit": LIMIT
     }
-    r = requests.get(NPI_API, params=params, timeout=30)
-    return r.json().get("results", [])
+    try:
+        r = requests.get(NPI_API, params=params, timeout=30)
+        return r.json().get("results", [])
+    except Exception:
+        return []
+
 
 def provider_matches(item):
     for t in item.get("taxonomies", []):
         if t.get("code") in TAXONOMY_ALLOWLIST:
             return True
     return False
+
 
 def build_provider(item, home_lat, home_lon, cache, budget):
     basic = item.get("basic", {})
@@ -141,6 +180,7 @@ def build_provider(item, home_lat, home_lon, cache, budget):
         "zip": addr.get("postal_code"),
         "distance_miles": distance
     }
+
 
 def main():
     cache = load_cache()
@@ -168,7 +208,7 @@ def main():
         "providers": providers
     }
 
-    with open("src/template.html", "r") as f:
+    with open("src/template.html", "r", encoding="utf-8") as f:
         template = f.read()
 
     html = template.replace(
@@ -177,10 +217,11 @@ def main():
     )
 
     os.makedirs("docs", exist_ok=True)
-    with open("docs/index.plain.html", "w") as f:
+    with open("docs/index.plain.html", "w", encoding="utf-8") as f:
         f.write(html)
 
     save_cache(cache)
+
 
 if __name__ == "__main__":
     main()
