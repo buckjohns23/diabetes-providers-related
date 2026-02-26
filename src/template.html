@@ -1,1 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Diabetes Providers Related</title>
+</head>
+<body>
+<h1>Diabetes Providers Related</h1>
+<div id="meta"></div>
+<table border="1" cellpadding="8">
+<thead>
+<tr>
+<th>Name</th>
+<th>Distance</th>
+<th>Phone</th>
+<th>Address</th>
+</tr>
+</thead>
+<tbody id="rows"></tbody>
+</table>
 
+<script>
+/*__EMBEDDED_DATA__*/
+
+document.getElementById("meta").innerText =
+  "Updated: " + DIRECTORY_DATA.generated_utc;
+
+const rows = DIRECTORY_DATA.providers.map(p => `
+<tr>
+<td>${p.name || ""}</td>
+<td>${p.distance_miles || ""}</td>
+<td>${p.phone || ""}</td>
+<td>${p.address || ""}, ${p.city || ""}, ${p.state || ""} ${p.zip || ""}</td>
+</tr>
+`).join("");
+
+document.getElementById("rows").innerHTML = rows;
+</script>
+</body>
+</html>
