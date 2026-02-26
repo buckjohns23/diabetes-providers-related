@@ -2,9 +2,8 @@ import json
 import math
 import os
 import re
-import time
 from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List
 
 import requests
 
@@ -15,21 +14,6 @@ NPI_API = "https://npiregistry.cms.hhs.gov/api/"
 VERSION = "2.1"
 LIMIT = 200
 
-HOME_ADDRESS = "1651 Cascade Drive, Greenwood, IN"
-HOME_LAT = 39.6130
-HOME_LON = -86.1067
-
-NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
-
-# ✅ Updated email
-USER_AGENT = "DiabetesProvidersRelated/1.0 (contact: c_m_johnson@yahoo.com)"
-
-CACHE_DIR = "cache"
-GEOCODE_CACHE_PATH = os.path.join(CACHE_DIR, "geocode_cache.json")
-
-MAX_NEW_GEOCODES_PER_RUN = 80
-GEOCODE_SLEEP_SECONDS = 1.1
-
 STATE = "IN"
 CITIES = [
     "Indianapolis", "Carmel", "Fishers", "Noblesville", "Westfield", "Zionsville",
@@ -38,20 +22,20 @@ CITIES = [
     "Beech Grove"
 ]
 
+# Diabetes-related specialties (taxonomy codes)
 TAXONOMY_ALLOWLIST = {
-    "207RE0101X",
-    "2080P0205X",
-    "207Q00000X",
-    "207R00000X",
-    "363L00000X",
-    "363A00000X",
+    "207RE0101X",  # Endocrinology, Diabetes & Metabolism
+    "2080P0205X",  # Pediatric Endocrinology
+    "207Q00000X",  # Family Medicine
+    "207R00000X",  # Internal Medicine
+    "363L00000X",  # Nurse Practitioner
+    "363A00000X",  # Physician Assistant
 }
 
 
 # =========================
 # HELPERS
 # =========================
-
 def clean_phone(phone: str) -> str:
     if not phone:
         return ""
@@ -61,151 +45,172 @@ def clean_phone(phone: str) -> str:
     return phone.strip()
 
 
-def haversine_miles(lat1, lon1, lat2, lon2):
-    R = 3958.7613
-    phi1, phi2 = math.radians(lat1), math.radians(lat2)
-    dphi = math.radians(lat2 - lat1)
-    dlambda = math.radians(lon2 - lon1)
-    a = math.sin(dphi/2)**2 + math.cos(phi1)*math.cos(phi2)*math.sin(dlambda/2)**2
-    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
-    return R * c
-
-
-def load_cache():
-    os.makedirs(CACHE_DIR, exist_ok=True)
-    if not os.path.exists(GEOCODE_CACHE_PATH):
-        return {"items": {}}
+def years_since(date_str: str) -> float:
     try:
-        with open(GEOCODE_CACHE_PATH, "r", encoding="utf-8") as f:
-            return json.load(f)
+        d = datetime.strptime(date_str, "%Y-%m-%d").replace(tzinfo=timezone.utc)
+        now = datetime.now(timezone.utc)
+        return round((now - d).days / 365.25, 1)
     except Exception:
-        return {"items": {}}
+        return 0.0
 
 
-def save_cache(cache):
-    with open(GEOCODE_CACHE_PATH, "w", encoding="utf-8") as f:
-        json.dump(cache, f, indent=2)
-
-
-# SAFE GEOCODING — WILL NOT CRASH WORKFLOW
-def geocode_address(addr, cache, budget):
-    key = addr.lower().strip()
-    if not key:
-        return None
-
-    if key in cache["items"]:
-        return cache["items"][key]
-
-    if budget["remaining"] <= 0:
-        return None
-
-    params = {
-        "q": addr,
-        "format": "json",
-        "limit": 1
-    }
-
-    try:
-        r = requests.get(
-            NOMINATIM_URL,
-            params=params,
-            headers={"User-Agent": USER_AGENT},
-            timeout=30
-        )
-
-        if r.status_code != 200:
-            return None
-
-        try:
-            results = r.json()
-        except Exception:
-            return None
-
-        if results:
-            lat = float(results[0]["lat"])
-            lon = float(results[0]["lon"])
-            cache["items"][key] = (lat, lon)
-            budget["remaining"] -= 1
-            time.sleep(GEOCODE_SLEEP_SECONDS)
-            return lat, lon
-
-    except Exception:
-        return None
-
-    return None
-
-
-def fetch_city(city):
-    params = {
-        "version": VERSION,
-        "state": STATE,
-        "city": city,
-        "limit": LIMIT
-    }
+def fetch_city(city: str) -> List[Dict[str, Any]]:
+    params = {"version": VERSION, "state": STATE, "city": city, "limit": LIMIT, "skip": 0}
     try:
         r = requests.get(NPI_API, params=params, timeout=30)
-        return r.json().get("results", [])
+        r.raise_for_status()
+        data = r.json()
     except Exception:
         return []
 
+    total = int(data.get("result_count", 0))
+    results = list(data.get("results", []) or [])
+    if total <= LIMIT:
+        return results
 
-def provider_matches(item):
-    for t in item.get("taxonomies", []):
-        if t.get("code") in TAXONOMY_ALLOWLIST:
+    pages = int(math.ceil(total / LIMIT))
+    for p in range(1, pages):
+        params["skip"] = p * LIMIT
+        try:
+            rp = requests.get(NPI_API, params=params, timeout=30)
+            rp.raise_for_status()
+            dp = rp.json()
+            results.extend(dp.get("results", []) or [])
+        except Exception:
+            continue
+
+    return results
+
+
+def provider_matches_taxonomy(item: Dict[str, Any]) -> bool:
+    for t in (item.get("taxonomies") or []):
+        code = (t.get("code") or "").strip()
+        if code in TAXONOMY_ALLOWLIST:
             return True
     return False
 
 
-def build_provider(item, home_lat, home_lon, cache, budget):
-    basic = item.get("basic", {})
-    addr = item.get("addresses", [{}])[0]
+def pick_location_address(item: Dict[str, Any]) -> Dict[str, Any]:
+    addrs = item.get("addresses") or []
+    for a in addrs:
+        if (a.get("address_purpose") or "").lower() == "location":
+            return a
+    return addrs[0] if addrs else {}
 
-    name = basic.get("organization_name") or \
-           f"{basic.get('first_name','')} {basic.get('last_name','')}".strip()
 
-    full_address = f"{addr.get('address_1','')}, {addr.get('city','')}, {addr.get('state','')} {addr.get('postal_code','')}"
+def clinic_or_place_of_work(item: Dict[str, Any]) -> str:
+    """
+    Best-effort: NPI does not reliably include employer/clinic for individuals.
+    We try a few common fields and return blank if none exist.
+    """
+    basic = item.get("basic") or {}
 
-    latlon = geocode_address(full_address, cache, budget)
+    # If the record itself is an organization provider (NPI-2)
+    org_name = (basic.get("organization_name") or "").strip()
+    if org_name:
+        return org_name
 
-    distance = None
-    if latlon:
-        distance = round(haversine_miles(home_lat, home_lon, latlon[0], latlon[1]), 1)
+    # Some entries include authorized official org name
+    auth = item.get("authorized_official") or {}
+    auth_org = (auth.get("organization_name") or "").strip()
+    if auth_org:
+        return auth_org
+
+    # Some entries have "authorized_official_organization_name" in other formats (rare)
+    for k in ["authorized_official_organization_name", "organization_name"]:
+        v = (item.get(k) or "").strip() if isinstance(item.get(k), str) else ""
+        if v:
+            return v
+
+    return ""
+
+
+def build_provider_record(item: Dict[str, Any]) -> Dict[str, Any]:
+    basic = item.get("basic") or {}
+    npi = str(item.get("number") or "")
+    enum_date = (basic.get("enumeration_date") or "").strip()
+
+    # Provider type and name
+    if basic.get("organization_name"):
+        provider_type = "Organization"
+        provider_name = (basic.get("organization_name") or "").strip()
+        credential = ""
+    else:
+        provider_type = "Individual"
+        first = (basic.get("first_name") or "").strip()
+        last = (basic.get("last_name") or "").strip()
+        credential = (basic.get("credential") or "").strip()
+        provider_name = " ".join([x for x in [first, last] if x]).strip()
+        if credential:
+            provider_name = f"{provider_name}, {credential}".strip()
+
+    # Clinic / place of work (best effort)
+    clinic = clinic_or_place_of_work(item)
+
+    # Specialty labels
+    labels = []
+    for t in (item.get("taxonomies") or []):
+        code = (t.get("code") or "").strip()
+        desc = (t.get("desc") or "").strip()
+        if code in TAXONOMY_ALLOWLIST:
+            labels.append(desc or code)
+    taxonomy_text = ", ".join(sorted(set([x for x in labels if x])))
+
+    # Address + phone from location
+    addr = pick_location_address(item)
+    phone = clean_phone(addr.get("telephone_number") or "")
+    address_1 = (addr.get("address_1") or "").strip()
+    address_2 = (addr.get("address_2") or "").strip()
+    address = (address_1 + (" " + address_2 if address_2 else "")).strip()
+
+    city = (addr.get("city") or "").strip()
+    state = (addr.get("state") or "").strip()
+    zipc = (addr.get("postal_code") or "").strip()
 
     return {
-        "name": name,
-        "phone": clean_phone(addr.get("telephone_number")),
-        "address": addr.get("address_1"),
-        "city": addr.get("city"),
-        "state": addr.get("state"),
-        "zip": addr.get("postal_code"),
-        "distance_miles": distance
+        "npi": npi,
+        "provider_type": provider_type,
+        "name": provider_name,
+        "credential": credential,
+        "clinic": clinic,
+        "taxonomy": taxonomy_text,
+        "phone": phone,
+        "address": address,
+        "city": city,
+        "state": state,
+        "zip": zipc,
+        "enumeration_date": enum_date,
+        "years_in_practice_proxy": years_since(enum_date),
     }
 
 
-def main():
-    cache = load_cache()
-    budget = {"remaining": MAX_NEW_GEOCODES_PER_RUN}
-
-    home_latlon = geocode_address(HOME_ADDRESS, cache, budget)
-    home_lat, home_lon = home_latlon if home_latlon else (HOME_LAT, HOME_LON)
-
-    results = []
+def main() -> None:
+    all_items: List[Dict[str, Any]] = []
     for city in CITIES:
-        for item in fetch_city(city):
-            if provider_matches(item):
-                results.append(item)
+        all_items.extend(fetch_city(city))
 
-    providers = [
-        build_provider(p, home_lat, home_lon, cache, budget)
-        for p in results
-    ]
+    # Filter + dedupe by NPI
+    by_npi: Dict[str, Dict[str, Any]] = {}
+    for item in all_items:
+        if not provider_matches_taxonomy(item):
+            continue
+        npi = str(item.get("number") or "")
+        if npi:
+            by_npi[npi] = item
 
-    providers.sort(key=lambda x: x["distance_miles"] or 999)
+    providers = [build_provider_record(item) for item in by_npi.values()]
+
+    # Default sort: Endocrinology first, then City, then Name
+    def sort_key(p: Dict[str, Any]):
+        endo_first = 0 if "endocrinology" in (p.get("taxonomy") or "").lower() else 1
+        return (endo_first, p.get("city") or "", p.get("name") or "")
+
+    providers.sort(key=sort_key)
 
     payload = {
         "generated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
-        "home_address": HOME_ADDRESS,
-        "providers": providers
+        "count": len(providers),
+        "providers": providers,
     }
 
     with open("src/template.html", "r", encoding="utf-8") as f:
@@ -219,8 +224,6 @@ def main():
     os.makedirs("docs", exist_ok=True)
     with open("docs/index.plain.html", "w", encoding="utf-8") as f:
         f.write(html)
-
-    save_cache(cache)
 
 
 if __name__ == "__main__":
