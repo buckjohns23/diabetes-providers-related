@@ -17,12 +17,12 @@ LIMIT = 200
 
 STATE = "IN"
 
-# Cities to *seed* search (we will still hard-filter by IN + ZIP)
+# Seed cities (doesn't matter if API returns weird stuff; we hard-filter IN)
 CITIES = [
     "Indianapolis", "Greenwood", "Franklin", "Columbus", "Bloomington", "Bedford",
-    "Martinsville", "Mooresville", "Shelbyville", "Seymour", "North Vernon",
-    "New Albany", "Jeffersonville", "Clarksville", "Louisville",  # (Louisville will be removed by IN filter)
-    "Evansville", "Jasper", "Washington", "Vincennes", "Terre Haute"
+    "Martinsville", "Mooresville", "Shelbyville", "Seymour",
+    "New Albany", "Jeffersonville", "Clarksville",
+    "Evansville", "Jasper", "Vincennes", "Terre Haute",
 ]
 
 # Diabetes-related specialties (taxonomy codes)
@@ -37,14 +37,7 @@ TAXONOMY_ALLOWLIST = {
 
 ENDO_TAXONOMY_CODES = {"207RE0101X", "2080P0205X"}
 
-# Southern Indiana rough ZIP rule:
-# Indiana ZIPs are generally 460xx–479xx. Southern half skews lower/mid 46xxx/47xxx.
-# We'll keep 46000–47999 BUT EXCLUDE the far north by using a cutoff:
-#   keep ZIPs where first 2 digits are 46 or 47, and within those,
-#   allow all. (This is simple and matches “southern half” reasonably well.)
-# If you want “south of Indy only”, we can tighten further.
-ALLOWED_ZIP_PREFIXES = {"46", "47"}  # 46xxx + 47xxx
-
+# Resilience (prevents random API hiccups from failing Actions)
 HTTP_TIMEOUT = 30
 MAX_RETRIES = 5
 RETRY_BACKOFF_SECONDS = 1.7
@@ -55,6 +48,7 @@ HEADERS = {
     "Accept": "application/json,text/plain,*/*",
 }
 
+# Snapshot cache (so workflow stays green)
 DATA_DIR = "data"
 LAST_GOOD_JSON = os.path.join(DATA_DIR, "last_good_payload.json")
 
@@ -71,6 +65,10 @@ def clean_phone(phone: str) -> str:
     return phone.strip()
 
 
+def normalize_state(st: str) -> str:
+    return (st or "").strip().upper()
+
+
 def years_since(date_str: str) -> float:
     try:
         d = datetime.strptime(date_str, "%Y-%m-%d").replace(tzinfo=timezone.utc)
@@ -80,7 +78,8 @@ def years_since(date_str: str) -> float:
         return 0.0
 
 
-def safe_get_json(url: str, params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+def safe_get_json(url: str, params: Optional[Dict[str, Any]] = None) -> Optional[Dict[str, Any]]:
+    """Fetch JSON with retries/backoff. Never throws; returns None if non-JSON."""
     for attempt in range(1, MAX_RETRIES + 1):
         try:
             r = requests.get(url, params=params, headers=HEADERS, timeout=HTTP_TIMEOUT)
@@ -104,6 +103,7 @@ def safe_get_json(url: str, params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
 
 
 def fetch_city(city: str) -> List[Dict[str, Any]]:
+    """Pull all pages for a city. Always returns a list."""
     params = {"version": VERSION, "state": STATE, "city": city, "limit": LIMIT, "skip": 0}
     data = safe_get_json(NPI_API, params)
     if not data:
@@ -146,6 +146,9 @@ def is_endocrinologist(item: Dict[str, Any]) -> bool:
 
 
 def pick_location_address(item: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    IMPORTANT: Must use the LOCATION address (not mailing).
+    """
     addrs = item.get("addresses") or []
     for a in addrs:
         if (a.get("address_purpose") or "").lower() == "location":
@@ -153,30 +156,12 @@ def pick_location_address(item: Dict[str, Any]) -> Dict[str, Any]:
     return addrs[0] if addrs else {}
 
 
-def normalize_zip(zip_raw: str) -> str:
-    z = (zip_raw or "").strip()
-    # NPI often has ZIP+4 like 46202-1234
-    z = z.split("-")[0]
-    z = re.sub(r"\D+", "", z)
-    return z
-
-
-def is_southern_indiana_location(addr: Dict[str, Any]) -> bool:
-    st = (addr.get("state") or "").strip().upper()
-    if st != "IN":
-        return False
-
-    z = normalize_zip(addr.get("postal_code") or "")
-    if len(z) < 5:
-        return False
-
-    if z[:2] not in ALLOWED_ZIP_PREFIXES:
-        return False
-
-    return True
+def is_indiana_location(addr: Dict[str, Any]) -> bool:
+    return normalize_state(addr.get("state")) == "IN"
 
 
 def clinic_or_place_of_work(item: Dict[str, Any]) -> str:
+    """Best-effort only."""
     basic = item.get("basic") or {}
     org_name = (basic.get("organization_name") or "").strip()
     if org_name:
@@ -227,8 +212,8 @@ def build_provider_record(item: Dict[str, Any], addr: Dict[str, Any]) -> Dict[st
     address = (address_1 + (" " + address_2 if address_2 else "")).strip()
 
     city = (addr.get("city") or "").strip()
-    state = (addr.get("state") or "").strip()
-    zipc = normalize_zip(addr.get("postal_code") or "")
+    state = normalize_state(addr.get("state") or "")
+    zipc = (addr.get("postal_code") or "").split("-")[0].strip()
 
     return {
         "npi": npi,
@@ -248,30 +233,42 @@ def build_provider_record(item: Dict[str, Any], addr: Dict[str, Any]) -> Dict[st
     }
 
 
-def load_last_good() -> Optional[Dict[str, Any]]:
+def load_json(path: str) -> Optional[Dict[str, Any]]:
     try:
-        if os.path.exists(LAST_GOOD_JSON):
-            with open(LAST_GOOD_JSON, "r", encoding="utf-8") as f:
+        if os.path.exists(path):
+            with open(path, "r", encoding="utf-8") as f:
                 return json.load(f)
     except Exception:
         return None
     return None
 
 
-def save_last_good(payload: Dict[str, Any]) -> None:
-    os.makedirs(DATA_DIR, exist_ok=True)
-    with open(LAST_GOOD_JSON, "w", encoding="utf-8") as f:
-        json.dump(payload, f, ensure_ascii=False, indent=2)
+def save_json(path: str, obj: Dict[str, Any]) -> None:
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(obj, f, ensure_ascii=False, indent=2)
+
+
+def sanitize_payload_in_only(payload: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Hard-remove any provider not in IN (this kills Texas/Ohio even in snapshots).
+    """
+    prov = payload.get("providers") or []
+    prov_in = [p for p in prov if normalize_state(p.get("state")) == "IN"]
+    payload["providers"] = prov_in
+    payload["count"] = len(prov_in)
+    return payload
 
 
 def main() -> None:
+    os.makedirs(DATA_DIR, exist_ok=True)
+
     all_items: List[Dict[str, Any]] = []
     for city in CITIES:
         all_items.extend(fetch_city(city))
 
-    # Filter to diabetes-related AND southern Indiana LOCATION address only
     by_npi: Dict[str, Dict[str, Any]] = {}
-    location_addr_by_npi: Dict[str, Dict[str, Any]] = {}
+    addr_by_npi: Dict[str, Dict[str, Any]] = {}
 
     for item in all_items:
         if not provider_matches_taxonomy(item):
@@ -282,21 +279,23 @@ def main() -> None:
             continue
 
         addr = pick_location_address(item)
-        if not is_southern_indiana_location(addr):
+
+        # ✅ HARD BLOCK: must be IN location address
+        if not is_indiana_location(addr):
             continue
 
         by_npi[npi] = item
-        location_addr_by_npi[npi] = addr
+        addr_by_npi[npi] = addr
 
     stale = False
     note = ""
 
     if len(by_npi) == 0:
-        cached = load_last_good()
+        cached = load_json(LAST_GOOD_JSON)
         if cached and isinstance(cached, dict) and "providers" in cached:
-            payload = cached
+            payload = sanitize_payload_in_only(cached)
             stale = True
-            note = "NPI API returned no usable data this run; showing last successful snapshot."
+            note = "API returned no usable data this run; showing last successful snapshot (IN-only sanitized)."
         else:
             payload = {
                 "generated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
@@ -304,22 +303,27 @@ def main() -> None:
                 "providers": [],
             }
             stale = True
-            note = "NPI API unavailable and no prior snapshot found yet."
+            note = "No usable data and no prior snapshot found yet."
     else:
-        providers = [
-            build_provider_record(by_npi[npi], location_addr_by_npi[npi])
-            for npi in by_npi.keys()
-        ]
-        providers.sort(key=lambda p: (0 if p.get("is_endocrinologist") else 1, p.get("city") or "", p.get("name") or ""))
+        providers = [build_provider_record(by_npi[npi], addr_by_npi[npi]) for npi in by_npi.keys()]
+
+        # ✅ ABSOLUTE FINAL FILTER: IN only (even if something slipped)
+        providers = [p for p in providers if normalize_state(p.get("state")) == "IN"]
+
+        providers.sort(
+            key=lambda p: (0 if p.get("is_endocrinologist") else 1, p.get("city") or "", p.get("name") or "")
+        )
+
         payload = {
             "generated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
             "count": len(providers),
             "providers": providers,
         }
-        save_last_good(payload)
+        save_json(LAST_GOOD_JSON, payload)
 
     payload["stale"] = stale
     payload["note"] = note
+    payload["territory_rule"] = "LOCATION state must equal IN (hard filtered)"
 
     with open("src/template.html", "r", encoding="utf-8") as f:
         template = f.read()
