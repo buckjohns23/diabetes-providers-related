@@ -38,7 +38,7 @@ ENDO_TAXONOMY_CODES = {
     "2080P0205X",
 }
 
-# Make external calls resilient
+# Request behavior (prevents random API hiccups from killing builds)
 HTTP_TIMEOUT = 30
 MAX_RETRIES = 5
 RETRY_BACKOFF_SECONDS = 1.7
@@ -49,7 +49,7 @@ HEADERS = {
     "Accept": "application/json,text/plain,*/*",
 }
 
-# Local “last known good” cache in repo so Actions never fails
+# Local “last known good” snapshot in repo (so Actions stays green)
 DATA_DIR = "data"
 LAST_GOOD_JSON = os.path.join(DATA_DIR, "last_good_payload.json")
 
@@ -76,23 +76,18 @@ def years_since(date_str: str) -> float:
 
 
 def safe_get_json(url: str, params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-    """
-    Never throws. Retries transient errors. Returns None if response is non-JSON.
-    """
+    """Fetch JSON with retries/backoff. Never throws; returns None if non-JSON."""
     for attempt in range(1, MAX_RETRIES + 1):
         try:
             r = requests.get(url, params=params, headers=HEADERS, timeout=HTTP_TIMEOUT)
 
-            # transient server/rate-limit -> retry
             if r.status_code in RETRY_STATUS_CODES:
                 time.sleep(RETRY_BACKOFF_SECONDS * attempt)
                 continue
 
-            # non-200 (other) -> do not retry endlessly
             if r.status_code != 200:
                 return None
 
-            # sometimes upstream returns html/empty - do not crash
             try:
                 return r.json()
             except Exception:
@@ -105,9 +100,7 @@ def safe_get_json(url: str, params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
 
 
 def fetch_city(city: str) -> List[Dict[str, Any]]:
-    """
-    Returns list, never throws.
-    """
+    """Pull all pages for a city. Always returns a list."""
     params = {"version": VERSION, "state": STATE, "city": city, "limit": LIMIT, "skip": 0}
     data = safe_get_json(NPI_API, params)
     if not data:
@@ -158,9 +151,7 @@ def pick_location_address(item: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def clinic_or_place_of_work(item: Dict[str, Any]) -> str:
-    """
-    Best-effort only. NPI usually does not include employer/clinic for individuals.
-    """
+    """Best-effort only."""
     basic = item.get("basic") or {}
     org_name = (basic.get("organization_name") or "").strip()
     if org_name:
@@ -250,7 +241,6 @@ def save_last_good(payload: Dict[str, Any]) -> None:
 
 
 def main() -> None:
-    # Try to fetch fresh data
     all_items: List[Dict[str, Any]] = []
     for city in CITIES:
         all_items.extend(fetch_city(city))
@@ -263,7 +253,6 @@ def main() -> None:
         if npi:
             by_npi[npi] = item
 
-    # If we got nothing, fall back to last good
     stale = False
     note = ""
 
@@ -274,7 +263,6 @@ def main() -> None:
             stale = True
             note = "NPI API returned no usable data this run; showing last successful snapshot."
         else:
-            # No cache yet; still build a valid page with empty results
             payload = {
                 "generated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
                 "count": 0,
@@ -282,7 +270,6 @@ def main() -> None:
             }
             stale = True
             note = "NPI API unavailable and no prior snapshot found yet."
-
     else:
         providers = [build_provider_record(item) for item in by_npi.values()]
         providers.sort(key=lambda p: (0 if p.get("is_endocrinologist") else 1, p.get("city") or "", p.get("name") or ""))
@@ -293,11 +280,9 @@ def main() -> None:
         }
         save_last_good(payload)
 
-    # Add status flags (template can optionally display them)
     payload["stale"] = stale
     payload["note"] = note
 
-    # Build HTML
     with open("src/template.html", "r", encoding="utf-8") as f:
         template = f.read()
 
