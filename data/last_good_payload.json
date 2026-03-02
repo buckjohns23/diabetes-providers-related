@@ -1,6 +1,6 @@
 {
-  "generated_utc": "2026-02-26 05:17:34",
-  "count": 392,
+  "generated_utc": "2026-03-02 14:29:38",
+  "count": 390,
   "providers": [
     {
       "npi": "1932299633",
@@ -112,7 +112,7 @@
       "state": "IN",
       "zip": "478025540",
       "enumeration_date": "2007-05-30",
-      "years_in_practice_proxy": 18.7
+      "years_in_practice_proxy": 18.8
     },
     {
       "npi": "1679680672",
@@ -224,7 +224,7 @@
       "state": "IN",
       "zip": "474214747",
       "enumeration_date": "2005-05-31",
-      "years_in_practice_proxy": 20.7
+      "years_in_practice_proxy": 20.8
     },
     {
       "npi": "1831119239",
@@ -352,7 +352,7 @@
       "state": "IN",
       "zip": "474214731",
       "enumeration_date": "2007-09-19",
-      "years_in_practice_proxy": 18.4
+      "years_in_practice_proxy": 18.5
     },
     {
       "npi": "1770784308",
@@ -368,7 +368,7 @@
       "state": "IN",
       "zip": "474215000",
       "enumeration_date": "2007-05-30",
-      "years_in_practice_proxy": 18.7
+      "years_in_practice_proxy": 18.8
     },
     {
       "npi": "1225579063",
@@ -608,7 +608,7 @@
       "state": "IN",
       "zip": "47403",
       "enumeration_date": "2007-04-24",
-      "years_in_practice_proxy": 18.8
+      "years_in_practice_proxy": 18.9
     },
     {
       "npi": "1033126156",
@@ -979,22 +979,6 @@
       "years_in_practice_proxy": 10.4
     },
     {
-      "npi": "1720475395",
-      "provider_type": "Individual",
-      "name": "DESIRE GREEN, NP",
-      "credential": "NP",
-      "clinic": "",
-      "taxonomy": "Nurse Practitioner",
-      "is_endocrinologist": false,
-      "phone": "(443) 383-9300",
-      "address": "101 POTTERS LN",
-      "city": "CLARKSVILLE",
-      "state": "IN",
-      "zip": "471291000",
-      "enumeration_date": "2015-04-22",
-      "years_in_practice_proxy": 10.9
-    },
-    {
       "npi": "1396170437",
       "provider_type": "Organization",
       "name": "EXPEDITION TRAILS EMERGENCY PHYSICIANS, LLC",
@@ -1009,22 +993,6 @@
       "zip": "471299204",
       "enumeration_date": "2013-09-09",
       "years_in_practice_proxy": 12.5
-    },
-    {
-      "npi": "1558402834",
-      "provider_type": "Organization",
-      "name": "GREENTREE PRIMARY CARE PLLC",
-      "credential": "",
-      "clinic": "GREENTREE PRIMARY CARE PLLC",
-      "taxonomy": "Internal Medicine",
-      "is_endocrinologist": false,
-      "phone": "(812) 981-7900",
-      "address": "207 E LEWIS AND CLARK PKWY #C",
-      "city": "CLARKSVILLE",
-      "state": "IN",
-      "zip": "471291711",
-      "enumeration_date": "2007-02-09",
-      "years_in_practice_proxy": 19.0
     },
     {
       "npi": "1699538447",
@@ -1104,7 +1072,7 @@
       "state": "IN",
       "zip": "472015351",
       "enumeration_date": "2023-05-30",
-      "years_in_practice_proxy": 2.7
+      "years_in_practice_proxy": 2.8
     },
     {
       "npi": "1780846428",
@@ -1248,7 +1216,7 @@
       "state": "IN",
       "zip": "472015351",
       "enumeration_date": "2019-05-30",
-      "years_in_practice_proxy": 6.7
+      "years_in_practice_proxy": 6.8
     },
     {
       "npi": "1205365475",
@@ -1616,7 +1584,7 @@
       "state": "IN",
       "zip": "477256302",
       "enumeration_date": "2019-05-31",
-      "years_in_practice_proxy": 6.7
+      "years_in_practice_proxy": 6.8
     },
     {
       "npi": "1366883316",
@@ -1632,7 +1600,7 @@
       "state": "IN",
       "zip": "477126504",
       "enumeration_date": "2013-07-07",
-      "years_in_practice_proxy": 12.6
+      "years_in_practice_proxy": 12.7
     },
     {
       "npi": "1437843638",
@@ -1696,7 +1664,7 @@
       "state": "IN",
       "zip": "477126505",
       "enumeration_date": "2018-08-10",
-      "years_in_practice_proxy": 7.5
+      "years_in_practice_proxy": 7.6
     },
     {
       "npi": "1598252652",
@@ -2080,7 +2048,7 @@
       "state": "IN",
       "zip": "461312731",
       "enumeration_date": "2012-09-18",
-      "years_in_practice_proxy": 13.4
+      "years_in_practice_proxy": 13.5
     },
     {
       "npi": "1902974926",
@@ -2096,7 +2064,7 @@
       "state": "IN",
       "zip": "461312795",
       "enumeration_date": "2006-11-30",
-      "years_in_practice_proxy": 19.2
+      "years_in_practice_proxy": 19.3
     },
     {
       "npi": "1902279870",
@@ -2144,7 +2112,7 @@
       "state": "IN",
       "zip": "461319199",
       "enumeration_date": "2005-06-01",
-      "years_in_practice_proxy": 20.7
+      "years_in_practice_proxy": 20.8
     },
     {
       "npi": "1093998361",
@@ -2192,7 +2160,7 @@
       "state": "IN",
       "zip": "461312730",
       "enumeration_date": "2025-10-23",
-      "years_in_practice_proxy": 0.3
+      "years_in_practice_proxy": 0.4
     },
     {
       "npi": "1336724434",
@@ -2240,7 +2208,7 @@
       "state": "IN",
       "zip": "474328328",
       "enumeration_date": "2008-09-18",
-      "years_in_practice_proxy": 17.4
+      "years_in_practice_proxy": 17.5
     },
     {
       "npi": "1093973885",
@@ -2256,7 +2224,7 @@
       "state": "IN",
       "zip": "465264810",
       "enumeration_date": "2008-05-28",
-      "years_in_practice_proxy": 17.7
+      "years_in_practice_proxy": 17.8
     },
     {
       "npi": "1972246197",
@@ -2384,7 +2352,7 @@
       "state": "IN",
       "zip": "461438558",
       "enumeration_date": "2017-05-30",
-      "years_in_practice_proxy": 8.7
+      "years_in_practice_proxy": 8.8
     },
     {
       "npi": "1801846175",
@@ -2496,7 +2464,7 @@
       "state": "IN",
       "zip": "461439825",
       "enumeration_date": "2006-08-13",
-      "years_in_practice_proxy": 19.5
+      "years_in_practice_proxy": 19.6
     },
     {
       "npi": "1477973311",
@@ -2544,7 +2512,7 @@
       "state": "IN",
       "zip": "461437365",
       "enumeration_date": "2006-05-31",
-      "years_in_practice_proxy": 19.7
+      "years_in_practice_proxy": 19.8
     },
     {
       "npi": "1689353179",
@@ -2576,7 +2544,7 @@
       "state": "IN",
       "zip": "461433609",
       "enumeration_date": "2006-08-13",
-      "years_in_practice_proxy": 19.5
+      "years_in_practice_proxy": 19.6
     },
     {
       "npi": "1255794871",
@@ -2752,7 +2720,7 @@
       "state": "IN",
       "zip": "461425195",
       "enumeration_date": "2006-07-05",
-      "years_in_practice_proxy": 19.6
+      "years_in_practice_proxy": 19.7
     },
     {
       "npi": "1861983348",
@@ -2896,7 +2864,7 @@
       "state": "IN",
       "zip": "462601903",
       "enumeration_date": "2023-05-30",
-      "years_in_practice_proxy": 2.7
+      "years_in_practice_proxy": 2.8
     },
     {
       "npi": "1730824244",
@@ -3024,7 +2992,7 @@
       "state": "IN",
       "zip": "462378668",
       "enumeration_date": "2013-10-22",
-      "years_in_practice_proxy": 12.3
+      "years_in_practice_proxy": 12.4
     },
     {
       "npi": "1194346270",
@@ -3456,7 +3424,7 @@
       "state": "IN",
       "zip": "475462700",
       "enumeration_date": "2007-01-04",
-      "years_in_practice_proxy": 19.1
+      "years_in_practice_proxy": 19.2
     },
     {
       "npi": "1518504455",
@@ -3680,7 +3648,7 @@
       "state": "IN",
       "zip": "471304494",
       "enumeration_date": "2006-10-23",
-      "years_in_practice_proxy": 19.3
+      "years_in_practice_proxy": 19.4
     },
     {
       "npi": "1336734466",
@@ -3712,7 +3680,7 @@
       "state": "IN",
       "zip": "471303739",
       "enumeration_date": "2011-11-28",
-      "years_in_practice_proxy": 14.2
+      "years_in_practice_proxy": 14.3
     },
     {
       "npi": "1811364250",
@@ -3840,7 +3808,7 @@
       "state": "IN",
       "zip": "472507328",
       "enumeration_date": "2005-10-24",
-      "years_in_practice_proxy": 20.3
+      "years_in_practice_proxy": 20.4
     },
     {
       "npi": "1396102901",
@@ -3888,7 +3856,7 @@
       "state": "IN",
       "zip": "461511863",
       "enumeration_date": "2011-07-08",
-      "years_in_practice_proxy": 14.6
+      "years_in_practice_proxy": 14.7
     },
     {
       "npi": "1821343500",
@@ -3968,7 +3936,7 @@
       "state": "IN",
       "zip": "461511861",
       "enumeration_date": "2005-08-12",
-      "years_in_practice_proxy": 20.5
+      "years_in_practice_proxy": 20.6
     },
     {
       "npi": "1750259131",
@@ -4016,7 +3984,7 @@
       "state": "IN",
       "zip": "461511840",
       "enumeration_date": "2005-08-11",
-      "years_in_practice_proxy": 20.5
+      "years_in_practice_proxy": 20.6
     },
     {
       "npi": "1578165387",
@@ -4064,7 +4032,7 @@
       "state": "IN",
       "zip": "461511861",
       "enumeration_date": "2005-08-11",
-      "years_in_practice_proxy": 20.5
+      "years_in_practice_proxy": 20.6
     },
     {
       "npi": "1093700825",
@@ -4112,7 +4080,7 @@
       "state": "IN",
       "zip": "461581788",
       "enumeration_date": "2008-09-15",
-      "years_in_practice_proxy": 17.4
+      "years_in_practice_proxy": 17.5
     },
     {
       "npi": "1700822889",
@@ -4160,7 +4128,7 @@
       "state": "IN",
       "zip": "461581788",
       "enumeration_date": "2006-11-28",
-      "years_in_practice_proxy": 19.2
+      "years_in_practice_proxy": 19.3
     },
     {
       "npi": "1558305375",
@@ -4448,7 +4416,7 @@
       "state": "IN",
       "zip": "473044517",
       "enumeration_date": "2007-06-01",
-      "years_in_practice_proxy": 18.7
+      "years_in_practice_proxy": 18.8
     },
     {
       "npi": "1346357076",
@@ -4800,7 +4768,7 @@
       "state": "IN",
       "zip": "476308925",
       "enumeration_date": "2005-05-31",
-      "years_in_practice_proxy": 20.7
+      "years_in_practice_proxy": 20.8
     },
     {
       "npi": "1225754781",
@@ -4848,7 +4816,7 @@
       "state": "IN",
       "zip": "47567",
       "enumeration_date": "2006-09-15",
-      "years_in_practice_proxy": 19.4
+      "years_in_practice_proxy": 19.5
     },
     {
       "npi": "1407004369",
@@ -5376,7 +5344,7 @@
       "state": "IN",
       "zip": "461768581",
       "enumeration_date": "2017-06-01",
-      "years_in_practice_proxy": 8.7
+      "years_in_practice_proxy": 8.8
     },
     {
       "npi": "1093127607",
@@ -5424,7 +5392,7 @@
       "state": "IN",
       "zip": "461768897",
       "enumeration_date": "2006-11-29",
-      "years_in_practice_proxy": 19.2
+      "years_in_practice_proxy": 19.3
     },
     {
       "npi": "1679597165",
@@ -5472,7 +5440,7 @@
       "state": "IN",
       "zip": "461768846",
       "enumeration_date": "2006-06-01",
-      "years_in_practice_proxy": 19.7
+      "years_in_practice_proxy": 19.8
     },
     {
       "npi": "1811371578",
@@ -5520,7 +5488,7 @@
       "state": "IN",
       "zip": "461768548",
       "enumeration_date": "2011-07-08",
-      "years_in_practice_proxy": 14.6
+      "years_in_practice_proxy": 14.7
     },
     {
       "npi": "1578874905",
@@ -5664,7 +5632,7 @@
       "state": "IN",
       "zip": "461768580",
       "enumeration_date": "2017-07-06",
-      "years_in_practice_proxy": 8.6
+      "years_in_practice_proxy": 8.7
     },
     {
       "npi": "1477558484",
@@ -5744,7 +5712,7 @@
       "state": "IN",
       "zip": "478023727",
       "enumeration_date": "2005-10-24",
-      "years_in_practice_proxy": 20.3
+      "years_in_practice_proxy": 20.4
     },
     {
       "npi": "1023107869",
@@ -5776,7 +5744,7 @@
       "state": "IN",
       "zip": "478044002",
       "enumeration_date": "2006-10-24",
-      "years_in_practice_proxy": 19.3
+      "years_in_practice_proxy": 19.4
     },
     {
       "npi": "1568548717",
@@ -5824,7 +5792,7 @@
       "state": "IN",
       "zip": "478073102",
       "enumeration_date": "2026-02-10",
-      "years_in_practice_proxy": 0.0
+      "years_in_practice_proxy": 0.1
     },
     {
       "npi": "1902340342",
@@ -5920,7 +5888,7 @@
       "state": "IN",
       "zip": "478023558",
       "enumeration_date": "2008-08-11",
-      "years_in_practice_proxy": 17.5
+      "years_in_practice_proxy": 17.6
     },
     {
       "npi": "1710213665",
@@ -6064,7 +6032,7 @@
       "state": "IN",
       "zip": "475911038",
       "enumeration_date": "2017-05-30",
-      "years_in_practice_proxy": 8.7
+      "years_in_practice_proxy": 8.8
     },
     {
       "npi": "1134358161",
@@ -6224,7 +6192,7 @@
       "state": "IN",
       "zip": "475914211",
       "enumeration_date": "2005-05-31",
-      "years_in_practice_proxy": 20.7
+      "years_in_practice_proxy": 20.8
     },
     {
       "npi": "1366127268",
