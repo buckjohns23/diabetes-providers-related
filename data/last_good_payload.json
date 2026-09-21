@@ -1,6 +1,6 @@
 {
-  "generated_utc": "2026-09-14 17:12:32",
-  "count": 375,
+  "generated_utc": "2026-09-21 17:22:30",
+  "count": 379,
   "providers": [
     {
       "npi": "1932299633",
@@ -432,7 +432,7 @@
       "state": "IN",
       "zip": "474212142",
       "enumeration_date": "2019-04-08",
-      "years_in_practice_proxy": 7.4
+      "years_in_practice_proxy": 7.5
     },
     {
       "npi": "1104323658",
@@ -496,7 +496,7 @@
       "state": "IN",
       "zip": "474034057",
       "enumeration_date": "2007-11-11",
-      "years_in_practice_proxy": 18.8
+      "years_in_practice_proxy": 18.9
     },
     {
       "npi": "1982117172",
@@ -512,7 +512,7 @@
       "state": "IN",
       "zip": "474018589",
       "enumeration_date": "2017-11-09",
-      "years_in_practice_proxy": 8.8
+      "years_in_practice_proxy": 8.9
     },
     {
       "npi": "1104632199",
@@ -560,7 +560,7 @@
       "state": "IN",
       "zip": "474033239",
       "enumeration_date": "2007-08-31",
-      "years_in_practice_proxy": 19.0
+      "years_in_practice_proxy": 19.1
     },
     {
       "npi": "1326576265",
@@ -624,7 +624,7 @@
       "state": "IN",
       "zip": "474018589",
       "enumeration_date": "2005-06-16",
-      "years_in_practice_proxy": 21.2
+      "years_in_practice_proxy": 21.3
     },
     {
       "npi": "1669695367",
@@ -672,7 +672,7 @@
       "state": "IN",
       "zip": "474033239",
       "enumeration_date": "2006-10-06",
-      "years_in_practice_proxy": 19.9
+      "years_in_practice_proxy": 20.0
     },
     {
       "npi": "1053555292",
@@ -864,7 +864,7 @@
       "state": "IN",
       "zip": "460328972",
       "enumeration_date": "2008-01-21",
-      "years_in_practice_proxy": 18.6
+      "years_in_practice_proxy": 18.7
     },
     {
       "npi": "1881394963",
@@ -976,7 +976,7 @@
       "state": "IN",
       "zip": "472015417",
       "enumeration_date": "2022-11-10",
-      "years_in_practice_proxy": 3.8
+      "years_in_practice_proxy": 3.9
     },
     {
       "npi": "1114486966",
@@ -1056,7 +1056,7 @@
       "state": "IN",
       "zip": "472018558",
       "enumeration_date": "2016-10-06",
-      "years_in_practice_proxy": 9.9
+      "years_in_practice_proxy": 10.0
     },
     {
       "npi": "1164509667",
@@ -1088,7 +1088,7 @@
       "state": "IN",
       "zip": "472015687",
       "enumeration_date": "2016-09-02",
-      "years_in_practice_proxy": 10.0
+      "years_in_practice_proxy": 10.1
     },
     {
       "npi": "1801626429",
@@ -1216,7 +1216,7 @@
       "state": "IN",
       "zip": "473312833",
       "enumeration_date": "2008-04-09",
-      "years_in_practice_proxy": 18.4
+      "years_in_practice_proxy": 18.5
     },
     {
       "npi": "1811991615",
@@ -1280,7 +1280,7 @@
       "state": "IN",
       "zip": "475239061",
       "enumeration_date": "2015-05-13",
-      "years_in_practice_proxy": 11.3
+      "years_in_practice_proxy": 11.4
     },
     {
       "npi": "1356892095",
@@ -1616,7 +1616,7 @@
       "state": "IN",
       "zip": "477131227",
       "enumeration_date": "2006-07-27",
-      "years_in_practice_proxy": 20.1
+      "years_in_practice_proxy": 20.2
     },
     {
       "npi": "1457729915",
@@ -1712,7 +1712,7 @@
       "state": "IN",
       "zip": "477101658",
       "enumeration_date": "2015-04-07",
-      "years_in_practice_proxy": 11.4
+      "years_in_practice_proxy": 11.5
     },
     {
       "npi": "1366429714",
@@ -1745,6 +1745,22 @@
       "zip": "477140541",
       "enumeration_date": "2020-03-20",
       "years_in_practice_proxy": 6.5
+    },
+    {
+      "npi": "1720690555",
+      "provider_type": "Individual",
+      "name": "MOHANNAD AL-KHATEEB, MD",
+      "credential": "MD",
+      "clinic": "",
+      "taxonomy": "Internal Medicine",
+      "is_endocrinologist": false,
+      "phone": "(812) 450-7720",
+      "address": "519 HARRIET ST",
+      "city": "EVANSVILLE",
+      "state": "IN",
+      "zip": "477101715",
+      "enumeration_date": "2020-08-21",
+      "years_in_practice_proxy": 6.1
     },
     {
       "npi": "1255581641",
@@ -2208,7 +2224,7 @@
       "state": "IN",
       "zip": "461421352",
       "enumeration_date": "2023-01-25",
-      "years_in_practice_proxy": 3.6
+      "years_in_practice_proxy": 3.7
     },
     {
       "npi": "1750829230",
@@ -2219,10 +2235,10 @@
       "taxonomy": "Family Medicine",
       "is_endocrinologist": false,
       "phone": "(317) 300-7424",
-      "address": "701 E COUNTY LINE RD SUITE 210",
+      "address": "1040 GREENWOOD SPRINGS BLVD STE 1A",
       "city": "GREENWOOD",
       "state": "IN",
-      "zip": "461431072",
+      "zip": "46143",
       "enumeration_date": "2017-02-06",
       "years_in_practice_proxy": 9.6
     },
@@ -2304,7 +2320,7 @@
       "state": "IN",
       "zip": "461433602",
       "enumeration_date": "2006-05-10",
-      "years_in_practice_proxy": 20.3
+      "years_in_practice_proxy": 20.4
     },
     {
       "npi": "1710989199",
@@ -2336,7 +2352,7 @@
       "state": "IN",
       "zip": "461431072",
       "enumeration_date": "2006-07-27",
-      "years_in_practice_proxy": 20.1
+      "years_in_practice_proxy": 20.2
     },
     {
       "npi": "1043383276",
@@ -2528,7 +2544,7 @@
       "state": "IN",
       "zip": "461436274",
       "enumeration_date": "2023-08-28",
-      "years_in_practice_proxy": 3.0
+      "years_in_practice_proxy": 3.1
     },
     {
       "npi": "1841458270",
@@ -2592,7 +2608,7 @@
       "state": "IN",
       "zip": "461425195",
       "enumeration_date": "2021-07-21",
-      "years_in_practice_proxy": 5.1
+      "years_in_practice_proxy": 5.2
     },
     {
       "npi": "1114362639",
@@ -2608,7 +2624,7 @@
       "state": "IN",
       "zip": "461439829",
       "enumeration_date": "2013-05-10",
-      "years_in_practice_proxy": 13.3
+      "years_in_practice_proxy": 13.4
     },
     {
       "npi": "1992140412",
@@ -2624,7 +2640,7 @@
       "state": "IN",
       "zip": "461439829",
       "enumeration_date": "2013-05-10",
-      "years_in_practice_proxy": 13.3
+      "years_in_practice_proxy": 13.4
     },
     {
       "npi": "1992729339",
@@ -2640,7 +2656,7 @@
       "state": "IN",
       "zip": "461431072",
       "enumeration_date": "2006-07-27",
-      "years_in_practice_proxy": 20.1
+      "years_in_practice_proxy": 20.2
     },
     {
       "npi": "1346865318",
@@ -2656,7 +2672,7 @@
       "state": "IN",
       "zip": "461431080",
       "enumeration_date": "2020-06-15",
-      "years_in_practice_proxy": 6.2
+      "years_in_practice_proxy": 6.3
     },
     {
       "npi": "1942231444",
@@ -2736,7 +2752,7 @@
       "state": "IN",
       "zip": "475428964",
       "enumeration_date": "2007-10-09",
-      "years_in_practice_proxy": 18.9
+      "years_in_practice_proxy": 19.0
     },
     {
       "npi": "1972565026",
@@ -2752,7 +2768,7 @@
       "state": "IN",
       "zip": "475428964",
       "enumeration_date": "2006-04-04",
-      "years_in_practice_proxy": 20.4
+      "years_in_practice_proxy": 20.5
     },
     {
       "npi": "1376714063",
@@ -2769,6 +2785,22 @@
       "zip": "462194225",
       "enumeration_date": "2008-03-20",
       "years_in_practice_proxy": 18.5
+    },
+    {
+      "npi": "1629675012",
+      "provider_type": "Organization",
+      "name": "8530 TOWNSHIP LINE ROAD OPCO LLC",
+      "credential": "",
+      "clinic": "8530 TOWNSHIP LINE ROAD OPCO LLC",
+      "taxonomy": "Family Medicine",
+      "is_endocrinologist": false,
+      "phone": "(463) 999-9045",
+      "address": "8530 TOWNSHIP LINE RD",
+      "city": "INDIANAPOLIS",
+      "state": "IN",
+      "zip": "462601927",
+      "enumeration_date": "2020-10-08",
+      "years_in_practice_proxy": 6.0
     },
     {
       "npi": "1740973437",
@@ -2832,7 +2864,7 @@
       "state": "IN",
       "zip": "462601902",
       "enumeration_date": "2022-01-20",
-      "years_in_practice_proxy": 4.6
+      "years_in_practice_proxy": 4.7
     },
     {
       "npi": "1851651871",
@@ -2864,7 +2896,7 @@
       "state": "IN",
       "zip": "462771938",
       "enumeration_date": "2025-01-24",
-      "years_in_practice_proxy": 1.6
+      "years_in_practice_proxy": 1.7
     },
     {
       "npi": "1043486343",
@@ -2881,6 +2913,22 @@
       "zip": "462270963",
       "enumeration_date": "2008-05-06",
       "years_in_practice_proxy": 18.4
+    },
+    {
+      "npi": "1336577733",
+      "provider_type": "Organization",
+      "name": "JOHNSTONE FAMILY PRACTICE",
+      "credential": "",
+      "clinic": "JOHNSTONE FAMILY PRACTICE",
+      "taxonomy": "Family Medicine",
+      "is_endocrinologist": false,
+      "phone": "(317) 300-0370",
+      "address": "7855 S EMERSON AVE SUITE H",
+      "city": "INDIANAPOLIS",
+      "state": "IN",
+      "zip": "462378668",
+      "enumeration_date": "2013-10-22",
+      "years_in_practice_proxy": 12.9
     },
     {
       "npi": "1194346270",
@@ -2944,7 +2992,7 @@
       "state": "IN",
       "zip": "462378601",
       "enumeration_date": "2022-06-21",
-      "years_in_practice_proxy": 4.2
+      "years_in_practice_proxy": 4.3
     },
     {
       "npi": "1780844506",
@@ -2960,7 +3008,7 @@
       "state": "IN",
       "zip": "462850001",
       "enumeration_date": "2008-06-16",
-      "years_in_practice_proxy": 18.2
+      "years_in_practice_proxy": 18.3
     },
     {
       "npi": "1235587932",
@@ -3024,7 +3072,7 @@
       "state": "IN",
       "zip": "475462514",
       "enumeration_date": "2006-01-26",
-      "years_in_practice_proxy": 20.6
+      "years_in_practice_proxy": 20.7
     },
     {
       "npi": "1811788862",
@@ -3136,7 +3184,7 @@
       "state": "IN",
       "zip": "475462514",
       "enumeration_date": "2006-07-26",
-      "years_in_practice_proxy": 20.1
+      "years_in_practice_proxy": 20.2
     },
     {
       "npi": "1417499674",
@@ -3184,7 +3232,7 @@
       "state": "IN",
       "zip": "47546",
       "enumeration_date": "2012-06-21",
-      "years_in_practice_proxy": 14.2
+      "years_in_practice_proxy": 14.3
     },
     {
       "npi": "1104452200",
@@ -3232,7 +3280,7 @@
       "state": "IN",
       "zip": "475463240",
       "enumeration_date": "2013-12-17",
-      "years_in_practice_proxy": 12.7
+      "years_in_practice_proxy": 12.8
     },
     {
       "npi": "1497753016",
@@ -3296,7 +3344,7 @@
       "state": "IN",
       "zip": "475462641",
       "enumeration_date": "2014-11-10",
-      "years_in_practice_proxy": 11.8
+      "years_in_practice_proxy": 11.9
     },
     {
       "npi": "1235755190",
@@ -3312,7 +3360,7 @@
       "state": "IN",
       "zip": "475461857",
       "enumeration_date": "2020-06-17",
-      "years_in_practice_proxy": 6.2
+      "years_in_practice_proxy": 6.3
     },
     {
       "npi": "1669435475",
@@ -3344,7 +3392,7 @@
       "state": "IN",
       "zip": "47546",
       "enumeration_date": "2019-08-30",
-      "years_in_practice_proxy": 7.0
+      "years_in_practice_proxy": 7.1
     },
     {
       "npi": "1275311276",
@@ -3376,7 +3424,7 @@
       "state": "IN",
       "zip": "475462514",
       "enumeration_date": "2025-07-25",
-      "years_in_practice_proxy": 1.1
+      "years_in_practice_proxy": 1.2
     },
     {
       "npi": "1013279371",
@@ -3408,7 +3456,7 @@
       "state": "IN",
       "zip": "475469172",
       "enumeration_date": "2022-04-03",
-      "years_in_practice_proxy": 4.4
+      "years_in_practice_proxy": 4.5
     },
     {
       "npi": "1740197136",
@@ -3440,7 +3488,7 @@
       "state": "IN",
       "zip": "471303420",
       "enumeration_date": "2022-10-06",
-      "years_in_practice_proxy": 3.9
+      "years_in_practice_proxy": 4.0
     },
     {
       "npi": "1720554769",
@@ -3536,7 +3584,7 @@
       "state": "IN",
       "zip": "471303641",
       "enumeration_date": "2021-03-01",
-      "years_in_practice_proxy": 5.5
+      "years_in_practice_proxy": 5.6
     },
     {
       "npi": "1649547274",
@@ -3568,7 +3616,7 @@
       "state": "IN",
       "zip": "471303705",
       "enumeration_date": "2005-08-30",
-      "years_in_practice_proxy": 21.0
+      "years_in_practice_proxy": 21.1
     },
     {
       "npi": "1518451814",
@@ -3584,7 +3632,7 @@
       "state": "IN",
       "zip": "469016461",
       "enumeration_date": "2018-06-20",
-      "years_in_practice_proxy": 8.2
+      "years_in_practice_proxy": 8.3
     },
     {
       "npi": "1124332143",
@@ -3616,7 +3664,7 @@
       "state": "IN",
       "zip": "467611158",
       "enumeration_date": "2014-06-19",
-      "years_in_practice_proxy": 12.2
+      "years_in_practice_proxy": 12.3
     },
     {
       "npi": "1962857813",
@@ -3680,7 +3728,7 @@
       "state": "IN",
       "zip": "472501607",
       "enumeration_date": "2016-01-27",
-      "years_in_practice_proxy": 10.6
+      "years_in_practice_proxy": 10.7
     },
     {
       "npi": "1255345278",
@@ -3696,7 +3744,7 @@
       "state": "IN",
       "zip": "472507328",
       "enumeration_date": "2006-07-27",
-      "years_in_practice_proxy": 20.1
+      "years_in_practice_proxy": 20.2
     },
     {
       "npi": "1548557630",
@@ -3760,7 +3808,7 @@
       "state": "IN",
       "zip": "461511840",
       "enumeration_date": "2007-06-20",
-      "years_in_practice_proxy": 19.2
+      "years_in_practice_proxy": 19.3
     },
     {
       "npi": "1730424490",
@@ -3808,7 +3856,7 @@
       "state": "IN",
       "zip": "461511840",
       "enumeration_date": "2009-12-21",
-      "years_in_practice_proxy": 16.7
+      "years_in_practice_proxy": 16.8
     },
     {
       "npi": "1538486899",
@@ -3936,7 +3984,7 @@
       "state": "IN",
       "zip": "461581467",
       "enumeration_date": "2006-06-20",
-      "years_in_practice_proxy": 20.2
+      "years_in_practice_proxy": 20.3
     },
     {
       "npi": "1760408348",
@@ -3984,7 +4032,7 @@
       "state": "IN",
       "zip": "461581788",
       "enumeration_date": "2006-06-15",
-      "years_in_practice_proxy": 20.2
+      "years_in_practice_proxy": 20.3
     },
     {
       "npi": "1568026144",
@@ -4128,7 +4176,7 @@
       "state": "IN",
       "zip": "461581467",
       "enumeration_date": "2022-06-19",
-      "years_in_practice_proxy": 4.2
+      "years_in_practice_proxy": 4.3
     },
     {
       "npi": "1487850988",
@@ -4288,7 +4336,7 @@
       "state": "IN",
       "zip": "471509254",
       "enumeration_date": "2011-11-09",
-      "years_in_practice_proxy": 14.8
+      "years_in_practice_proxy": 14.9
     },
     {
       "npi": "1114706447",
@@ -4496,7 +4544,7 @@
       "state": "IN",
       "zip": "471506419",
       "enumeration_date": "2006-08-31",
-      "years_in_practice_proxy": 20.0
+      "years_in_practice_proxy": 20.1
     },
     {
       "npi": "1104599398",
@@ -4512,7 +4560,7 @@
       "state": "IN",
       "zip": "471504990",
       "enumeration_date": "2021-07-26",
-      "years_in_practice_proxy": 5.1
+      "years_in_practice_proxy": 5.2
     },
     {
       "npi": "1730171083",
@@ -4672,7 +4720,7 @@
       "state": "IN",
       "zip": "47274",
       "enumeration_date": "2006-05-10",
-      "years_in_practice_proxy": 20.3
+      "years_in_practice_proxy": 20.4
     },
     {
       "npi": "1093779316",
@@ -4736,7 +4784,7 @@
       "state": "IN",
       "zip": "472742363",
       "enumeration_date": "2007-06-19",
-      "years_in_practice_proxy": 19.2
+      "years_in_practice_proxy": 19.3
     },
     {
       "npi": "1205469723",
@@ -4864,7 +4912,7 @@
       "state": "IN",
       "zip": "47274",
       "enumeration_date": "2019-06-20",
-      "years_in_practice_proxy": 7.2
+      "years_in_practice_proxy": 7.3
     },
     {
       "npi": "1104950153",
@@ -4912,7 +4960,7 @@
       "state": "IN",
       "zip": "472747926",
       "enumeration_date": "2006-08-30",
-      "years_in_practice_proxy": 20.0
+      "years_in_practice_proxy": 20.1
     },
     {
       "npi": "1013321447",
@@ -5072,7 +5120,7 @@
       "state": "IN",
       "zip": "461768580",
       "enumeration_date": "2025-04-04",
-      "years_in_practice_proxy": 1.4
+      "years_in_practice_proxy": 1.5
     },
     {
       "npi": "1669047502",
@@ -5136,7 +5184,7 @@
       "state": "IN",
       "zip": "461768580",
       "enumeration_date": "2008-02-28",
-      "years_in_practice_proxy": 18.5
+      "years_in_practice_proxy": 18.6
     },
     {
       "npi": "1174690713",
@@ -5168,7 +5216,7 @@
       "state": "IN",
       "zip": "461768580",
       "enumeration_date": "2006-07-27",
-      "years_in_practice_proxy": 20.1
+      "years_in_practice_proxy": 20.2
     },
     {
       "npi": "1992265490",
@@ -5360,7 +5408,7 @@
       "state": "IN",
       "zip": "461768580",
       "enumeration_date": "2023-05-11",
-      "years_in_practice_proxy": 3.3
+      "years_in_practice_proxy": 3.4
     },
     {
       "npi": "1508685579",
@@ -5376,7 +5424,7 @@
       "state": "IN",
       "zip": "461768580",
       "enumeration_date": "2024-10-07",
-      "years_in_practice_proxy": 1.9
+      "years_in_practice_proxy": 2.0
     },
     {
       "npi": "1144741687",
@@ -5472,7 +5520,7 @@
       "state": "IN",
       "zip": "478024790",
       "enumeration_date": "2014-01-23",
-      "years_in_practice_proxy": 12.6
+      "years_in_practice_proxy": 12.7
     },
     {
       "npi": "1013907922",
@@ -5600,7 +5648,7 @@
       "state": "IN",
       "zip": "478091903",
       "enumeration_date": "2026-01-22",
-      "years_in_practice_proxy": 0.6
+      "years_in_practice_proxy": 0.7
     },
     {
       "npi": "1669322939",
@@ -5696,7 +5744,7 @@
       "state": "IN",
       "zip": "478091902",
       "enumeration_date": "2026-01-21",
-      "years_in_practice_proxy": 0.6
+      "years_in_practice_proxy": 0.7
     },
     {
       "npi": "1437263555",
@@ -5728,7 +5776,7 @@
       "state": "IN",
       "zip": "478071061",
       "enumeration_date": "2022-06-21",
-      "years_in_practice_proxy": 4.2
+      "years_in_practice_proxy": 4.3
     },
     {
       "npi": "1518305689",
@@ -5907,6 +5955,22 @@
       "years_in_practice_proxy": 20.3
     },
     {
+      "npi": "1992283782",
+      "provider_type": "Individual",
+      "name": "LAUREN BOUCHIE, PA-C",
+      "credential": "PA-C",
+      "clinic": "",
+      "taxonomy": "Physician Assistant",
+      "is_endocrinologist": false,
+      "phone": "(812) 885-8770",
+      "address": "520 S 7TH ST HEALTH PAVILION SB 406",
+      "city": "VINCENNES",
+      "state": "IN",
+      "zip": "475911038",
+      "enumeration_date": "2018-08-02",
+      "years_in_practice_proxy": 8.1
+    },
+    {
       "npi": "1770648883",
       "provider_type": "Individual",
       "name": "REBECCA AKERS, A.N.P., F.N.P",
@@ -5984,7 +6048,7 @@
       "state": "IN",
       "zip": "475915012",
       "enumeration_date": "2023-06-19",
-      "years_in_practice_proxy": 3.2
+      "years_in_practice_proxy": 3.3
     },
     {
       "npi": "1184014086",
